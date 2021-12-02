@@ -1,0 +1,42 @@
+---
+# instal autofs for any distro 
+- name: Install autofs
+  ansible.builtin.package:
+    name: autofs
+# Make dirs for nfs share's mounting point 
+- name: Create /data dir  
+  ansible.builtin.file:
+    path: /data
+    state: directory
+    mode: '0755'    
+- name: Create sub dir 1 in /data
+  ansible.builtin.file:
+      path: /data/upload
+      state: directory
+      mode: '0755'
+- name: Create sub dir 2 in /data
+  ansible.builtin.file:
+      path: /data/dump
+      state: directory
+      mode: '0755'
+
+# Copy configuration files 
+- name: Copy auto.master to /etc 
+  ansible.builtin.copy:
+    src: auto.master
+    dest: /etc/auto.master
+    owner: root
+    group: root
+    mode: '0644'
+- name: Copy auto.share to /etc 
+  ansible.builtin.copy:
+    src: auto.share
+    dest: /etc/auto.share
+    owner: root
+    group: root
+    mode: '0644'
+# Restart autofs to load new config 
+- name: Restart autofs
+  ansible.builtin.service:
+    name: autofs.service
+    state: restarted

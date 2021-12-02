@@ -1,0 +1,2 @@
+upload  -fstype=nfs    gallie.snwb.howest.be:/srv/upload
+dump    -fstype=nfs    gallie.snwb.howest.be:/srv/dump
